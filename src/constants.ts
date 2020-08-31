@@ -1,0 +1,1 @@
+export const PROPERTIES = "properties"

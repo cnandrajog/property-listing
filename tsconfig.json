@@ -1,0 +1,41 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "target": "es2017",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "lib": ["es7", "esnext.asynciterable"],
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "esModuleInterop": true,
+    "baseUrl": ".",
+    "outDir": "dist/src",
+    "sourceMap": true,
+    "paths": {
+      "*": ["node_modules/*", "src/types/*"]
+    },
+    "typeRoots": ["./types", "./node_modules/@types"],
+    "allowJs": true,
+    "importHelpers": true,
+    "checkJs": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    //"noUnusedParameters": true,
+    "noImplicitAny": false,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    //"noUnusedLocals": true,
+    "allowSyntheticDefaultImports": true
+
+    // commented for success build
+    // "noEmit": true
+    // "strict": true,
+    // "alwaysStrict": true,
+  },
+  "include": ["**/*.ts", "**/*.js"],
+  "exclude": [
+    "**/*.spec.*",
+    "node_modules/**/*",
+    "build/**/*"
+  ]
+}
