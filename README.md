@@ -17,7 +17,7 @@
 
 ## Setup ENV file
 - Please make sure to set-up .env file.
-- For your convenience .env file has been checked in with original values. ***Checking in .env file not recommended for production***.
+- For your convenience .env file has been checked in with original values. ***Checking in .env file is not recommended for production***.
 
 ## Database
 
@@ -36,14 +36,14 @@ mongodb+srv://<username>:<password>@property-listing.u2tjw.mongodb.net/<database
 
 ## Design Decisions
 
-1.  Using [SimplyRETS](https://docs.simplyrets.com/) api by wrapping REST api in [GraphQL](https://graphql.org/).
-2.  Listings query api will fetch data both SimpleRETS and mongo db Listing collection.
-3.  ToggleFavorite query to toggle favorites for user.
-4.  If user has already marked a listing as favorite, ToggleFavorite will remove the favorite.
-5.  For each user favorite listing will be stored in user collection's.
-6.  Used Basic HTTP Authentication , as mentioned in the acceptance criteria.
-7.  For username and password for basic authentication, please refer to the ***mongodb collection details*** below.
-6.  Using [jest](https://jestjs.io/) for unit testing
+-  Using [SimplyRETS](https://docs.simplyrets.com/) api by wrapping REST api in [GraphQL](https://graphql.org/).
+-  Listings query api,  will fetch data both SimpleRETS and mongo db Listing collection.
+-  ToggleFavorite query to toggle favorites for user.
+-  If user has already marked a listing as favorite, ToggleFavorite will remove the favorite.
+-  For each user favorite listing will be stored in user collection's.
+-  Used Basic HTTP Authentication , as mentioned in the acceptance criteria.
+-  For username and password for basic authentication, please refer to the ***mongodb collection details*** below.
+-  Using [jest](https://jestjs.io/) for unit testing
 
 ## Samples to run in [playground](http://localhost:3000/graphql)
 
@@ -84,27 +84,27 @@ mutation Togglefavorites {
 ```
 
 ## MongoDb Collections details
-1. There are two collections in mongodb users and listings 
-2. Below are the records for user collection
-    a) email/username: user2@sideinc.com , password: user1
-    b) email/username: user1@sideinc.com , password: user2
-3. Password for users collection were encrypted using [bcrypt](https://www.npmjs.com/package/bcrypt) library
-4. listings collection store property list (extra) details in the database.
-5. ***It is not recommended to provide username and password details in a production setup, as provided above***
+- There are two collections in mongodb, users and listings 
+- Below are the records for user collection: 
+    - email/username: user2@sideinc.com , password: user1
+    - email/username: user1@sideinc.com , password: user2
+- Password for users collection were encrypted using [bcrypt](https://www.npmjs.com/package/bcrypt) library
+- listings collection store property list (extra) details in the database.
+- ***It is not recommended to provide username and password details in a production setup, as provided above***
 
 ##HTTP Headers
 
-1. To execute query or mutations from [playground](http://localhost:3000/graphql) 
+- To execute query or mutations from [playground](http://localhost:3000/graphql) 
 you will need base 64 credentials in the header. Below are the credentials for your convenience. 
 ***It is not recommended to provide all the below details for production set up.***
 
-2. For user1   
+- For user1   
 ```
 {
   "Authorization" : "Basic dXNlcjFAc2lkZWluYy5jb206dXNlcjE="
 }
 ```
-3. For user2
+- For user2
 
 ```
 {
