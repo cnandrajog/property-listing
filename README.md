@@ -8,7 +8,7 @@
 - Framework: [Apollo](https://www.apollographql.com/)
 - Database: [MongoDb](https://www.mongodb.com/)
 - Testing: [Jest](https://jestjs.io/)
-- Source control: Git
+- Source control: [Git](https://git-scm.com/book/en/v2/Getting-Started-About-Version-Control)
 
 ## Prerequisites
 
@@ -17,7 +17,7 @@
 
 ## Setup ENV file
 - Please make sure to set-up .env file.
-- For your convenience .env file has been checked in with original values. It is not recommended for production.
+- For your convenience .env file has been checked in with original values. ***Checking in .env file not recommended for production***.
 
 ## Database
 
@@ -33,10 +33,6 @@ mongodb+srv://<username>:<password>@property-listing.u2tjw.mongodb.net/<database
 - Run `npm run dev` to start development mode.
 - Run `npm test` to run all the tests in the test folder or files with `xxx.test.ts`.
 - To access [playground](http://localhost:3000/graphql).
-
-## TypeScript
-
-- TypeScript style guide is driven by eslint rules in this project.
 
 ## Design Decisions
 
@@ -94,13 +90,13 @@ mutation Togglefavorites {
     b) email/username: user1@sideinc.com , password: user2
 3. Password for users collection were encrypted using [bcrypt](https://www.npmjs.com/package/bcrypt) library
 4. listings collection store property list (extra) details in the database.
-5. It is not recommended to provide username and password details in a production setup, as provided above
+5. ***It is not recommended to provide username and password details in a production setup, as provided above***
 
 ##HTTP Headers
 
 1. To execute query or mutations from [playground](http://localhost:3000/graphql) 
 you will need base 64 credentials in the header. Below are the credentials for your convenience. 
-***It is not recommended to provide all these things for production set up.***
+***It is not recommended to provide all the below details for production set up.***
 
 2. For user1   
 ```
