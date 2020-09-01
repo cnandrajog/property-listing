@@ -9,7 +9,7 @@ export const createMongoConnection = async () => {
         console.log('Database connected successfully');
         return connection;
     } catch (error) {
-        console.log(error);
+        console.log('Error connecting Database',error);
         throw error;
     }
 }
