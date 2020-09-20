@@ -1,8 +1,11 @@
+import {ContextDataSources} from "../types/context";
+import {CustomDataSources} from "dataSource";
+
 export const listingResolvers = {
     Query: {
-        listings: (_, {city}, {dataSource}) => {
+        listings: (_, {city}, {dataSources}: ContextDataSources) => {
             try {
-                return dataSource.ListingAPI.getListingsByCity(city);
+                return dataSources.ListingAPI.getListingsByCity(city);
             } catch (error) {
                 console.log('Error while getting listings', error);
                 throw error;
@@ -10,9 +13,9 @@ export const listingResolvers = {
         }
     },
     Listing: {
-        favoriteCount: async (parent, _, {dataSource}) => {
+        favoriteCount: async (parent, _, {dataSources}: ContextDataSources) => {
             try {
-                return getFavoriteCount(parent, dataSource);
+                return getFavoriteCount(parent, dataSources);
             } catch (error) {
                 console.log('Error while retrieving favorite count', error);
                 throw error
@@ -21,10 +24,10 @@ export const listingResolvers = {
     }
 }
 
-const getFavoriteCount = async (parent, dataSource) => {
+const getFavoriteCount = async (parent, dataSources: CustomDataSources) => {
     if (parent) {
         const {mlsId} = parent;
-        const listing = await (dataSource.Listing.loadMany(mlsId.toString()));
+        const listing = await (dataSources.Listing.loadMany(mlsId.toString()));
         if (listing) {
             return listing['favoriteCount'];
         }

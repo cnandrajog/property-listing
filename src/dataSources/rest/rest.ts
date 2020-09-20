@@ -1,8 +1,13 @@
 import fetch from "node-fetch";
-import {DataSource} from "../base";
+import {DataSource} from "apollo-datasource";
 
-export class RestDataSource implements DataSource {
+
+export class RestDataSource extends DataSource {
     protected baseUrl
+
+    constructor() {
+        super();
+    }
 
     async get(path: string, queryString: string = "") {
         const url = `${this.baseUrl}/${path}/?${queryString}`
@@ -10,3 +15,4 @@ export class RestDataSource implements DataSource {
         return await response.json();
     }
 }
+

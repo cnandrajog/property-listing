@@ -4,9 +4,11 @@ import DataLoader from "dataloader";
 
 export class ListingMongoDataSource extends MongoDataSource<IListing> {
 
+    private listingLoader
 
     constructor() {
         super(listingModel);
+        this.listingLoader = new DataLoader(this.batchListing);
     }
 
     async loadMany(id) {
@@ -21,12 +23,5 @@ export class ListingMongoDataSource extends MongoDataSource<IListing> {
             )
         )
     };
-
-    private listingLoader = new DataLoader(keys => {
-        return this.batchListing(keys)
-    }, {
-        cache: false
-    });
-
 
 }

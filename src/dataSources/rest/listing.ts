@@ -1,10 +1,10 @@
 import {RestDataSource} from "./rest";
-import {PROPERTIES} from "../../constants";
+import {PROPERTIES, SIMPLY_RETS_API} from "../../constants";
 
 export class ListingRestDataSource extends RestDataSource {
     constructor() {
         super();
-        this.baseUrl = process.env.SIMPLY_RETS_API
+        this.baseUrl = SIMPLY_RETS_API
     }
 
     // TODO: this can be improved by accepting an array

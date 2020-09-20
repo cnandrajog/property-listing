@@ -1,15 +1,16 @@
 import {Document, FilterQuery, Model, SaveOptions} from "mongoose";
-import {DataSource} from "../base";
+import {DataSource} from "apollo-datasource";
 
-export class MongoDataSource<T extends Document> implements DataSource {
+export class MongoDataSource<T extends Document> extends DataSource {
 
     model: Model<T>
 
     constructor(modelClass: Model<T>) {
+        super();
         this.model = modelClass;
     }
 
-    async findById(id: any | string | number) {
+    async findById<U>(id: U) {
         return this.model.findById(id);
     }
 
@@ -21,7 +22,7 @@ export class MongoDataSource<T extends Document> implements DataSource {
         return this.model.find(conditions)
     }
 
-    async save(data: any, options?: SaveOptions) {
+    async save<U>(data: U, options?: SaveOptions) {
         const newModel = (new this.model(data));
         return await newModel.save(options);
     }

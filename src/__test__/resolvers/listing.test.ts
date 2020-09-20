@@ -4,7 +4,7 @@ import {listingResolvers} from "../../resolvers/listing";
 describe('listing resolvers', () => {
 
     const mockContext = {
-        dataSource: {
+        dataSources: {
             ListingAPI: {
                 getListingsByCity: jest.fn()
             }, Listing: {
@@ -14,7 +14,7 @@ describe('listing resolvers', () => {
     };
 
     it('[expect getListingsByCity() to be called]', async () => {
-        const {getListingsByCity} = mockContext.dataSource.ListingAPI;
+        const {getListingsByCity} = mockContext.dataSources.ListingAPI;
         getListingsByCity.mockReturnValueOnce([{mlsId: "1005192"}]);
 
         listingResolvers.Query.listings(null, {city: 'Houston'}, mockContext)
@@ -22,7 +22,7 @@ describe('listing resolvers', () => {
     });
 
     it('[expect listing loader not to be called]', async () => {
-        const {loadMany} = mockContext.dataSource.Listing;
+        const {loadMany} = mockContext.dataSources.Listing;
         const favCount = await listingResolvers.Listing.favoriteCount(null, null, mockContext)
         expect(favCount).toBe(0);
         expect(loadMany).not.toBeCalled();
@@ -30,7 +30,7 @@ describe('listing resolvers', () => {
     });
 
     it('[expect listing loader to be called]', async () => {
-        const {loadMany} = mockContext.dataSource.Listing;
+        const {loadMany} = mockContext.dataSources.Listing;
         await listingResolvers.Listing.favoriteCount({mlsId: "1005192"}, null, mockContext)
         expect(loadMany).toBeCalledWith("1005192");
     });

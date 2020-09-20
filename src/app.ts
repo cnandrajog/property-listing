@@ -1,48 +1,47 @@
+import {logQuery} from "./utils/logging";
 import express, {Application} from 'express'
-import dotEnv from 'dotenv';
 import cors from 'cors'
 import {ApolloServer} from "apollo-server-express";
 import {resolvers} from "./resolvers";
 import {typeDefs} from "./typeDefs";
-import {createMongoConnection} from "./util/database";
-import {verifyUser} from "./util/context"
+import {createMongoConnection} from "./utils/database";
+import {verifyUser} from "./utils/context"
 import {GraphQLError} from "graphql";
 import {ListingRestDataSource} from "./dataSources/rest/listing";
-import {DataSource} from "./types/common";
-import {Mongoose} from "mongoose";
 import {IUser, userModel} from "./models/user";
 import {MongoDataSource} from "./dataSources/mongo/mongo";
 import {ListingMongoDataSource} from "./dataSources/mongo/listing";
+import {DEBUG_MODE, INTROSPECTION, PORT} from "./constants";
+
 
 class App {
 
     app: Application;
-    dataSources: DataSource;
-    mongoConnection: Mongoose
 
     constructor() {
         this.config();
         void this.setupDb();
         this.mountServer();
-        this.dataSources = this.getDataSources();
     }
 
     config() {
-        dotEnv.config();
         this.app = express();
         this.app.use(cors());
         this.app.use(express.json())
     }
 
-    setupDb = async () => {
-        this.mongoConnection = await createMongoConnection();
+    setupDb = () => {
+        return createMongoConnection();
     }
 
     mountServer() {
-        const port = process.env.PORT || 3000
+        const port = PORT
         const apolloServer = new ApolloServer({
             typeDefs,
             resolvers,
+            dataSources: this.getDataSources,
+            introspection: INTROSPECTION,
+            debug: DEBUG_MODE,
             context: async ({req}) => {
                 try {
                     await verifyUser(req)
@@ -52,7 +51,6 @@ class App {
                 }
                 return {
                     user: req['user'],
-                    dataSource: this.dataSources
                 }
             }, formatError: (error: GraphQLError) => {
                 console.log('Error in property listing service', error);
@@ -60,7 +58,9 @@ class App {
                     message: error.message
                 }
             }
-        })
+        });
+
+        this.app.use("/graphql", (req, res, next) => logQuery(req,res,next));
         apolloServer.applyMiddleware({app: this.app, path: '/graphql'})
         this.app.listen(port, () => {
             console.log('Server listening on PORT: ', port)

@@ -3,7 +3,7 @@ import {favoritesResolvers} from "../../resolvers/favorite";
 describe('favorite resolvers', () => {
 
     const mockContext = {
-        dataSource: {
+        dataSources: {
             Listing: {
                 findOne: jest.fn(),
                 save: jest.fn(),
@@ -21,18 +21,18 @@ describe('favorite resolvers', () => {
         const user = {id: "userId", favorites: [], email: "user1@sideinc.com", name: "user1"}
         const initListing = {mlsId: "1005192", favoriteCount: 1}
 
-        const {findById} = mockContext.dataSource.User;
+        const {findById} = mockContext.dataSources.User;
         findById.mockReturnValueOnce(user);
 
-        const {findOne} = mockContext.dataSource.Listing;
+        const {findOne} = mockContext.dataSources.Listing;
 
         // when listing "1005192" was toggled 1st time
         findOne.mockReturnValueOnce(initListing);
 
-        const {save} = mockContext.dataSource.User;
+        const {save} = mockContext.dataSources.User;
         save.mockReturnValue(user);
 
-        const userListing = mockContext.dataSource.Listing.save;
+        const userListing = mockContext.dataSources.Listing.save;
 
         const userInfo = await favoritesResolvers.Mutation.toggleFavorite(null, {mlsId: "1005192"}, mockContext);
 
@@ -49,18 +49,18 @@ describe('favorite resolvers', () => {
         const user = {id: "userId", favorites: ["1005192"], email: "user1@sideinc.com", name: "user1"}
         const initListing = {mlsId: "1005192", favoriteCount: 1}
 
-        const {findById} = mockContext.dataSource.User;
+        const {findById} = mockContext.dataSources.User;
         findById.mockReturnValueOnce(user);
 
-        const {findOne} = mockContext.dataSource.Listing;
+        const {findOne} = mockContext.dataSources.Listing;
 
         // when listing "1005192" was toggled 2st time
         findOne.mockReturnValueOnce(initListing);
 
-        const {save} = mockContext.dataSource.User;
+        const {save} = mockContext.dataSources.User;
         save.mockReturnValue(user);
 
-        const userListing = mockContext.dataSource.Listing.save;
+        const userListing = mockContext.dataSources.Listing.save;
 
         const userInfo = await favoritesResolvers.Mutation.toggleFavorite(null, {mlsId: "1005192"}, mockContext);
 
@@ -77,18 +77,18 @@ describe('favorite resolvers', () => {
 
         const user = {id: "userId", favorites: [], email: "user1@sideinc.com", name: "user1"}
 
-        const {findById} = mockContext.dataSource.User;
+        const {findById} = mockContext.dataSources.User;
         findById.mockReturnValueOnce(user);
 
-        const {findOne} = mockContext.dataSource.Listing;
+        const {findOne} = mockContext.dataSources.Listing;
 
         // when listing "1005192" was toggled 1st time
         findOne.mockReturnValueOnce(null);
 
-        const {save} = mockContext.dataSource.User;
+        const {save} = mockContext.dataSources.User;
         save.mockReturnValue(user);
 
-        const userListing = mockContext.dataSource.Listing.save;
+        const userListing = mockContext.dataSources.Listing.save;
 
         const userInfo = await favoritesResolvers.Mutation.toggleFavorite(null, {mlsId: "1005192"}, mockContext);
 
