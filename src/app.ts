@@ -1,4 +1,4 @@
-import {logQuery} from "./utils/logging";
+import {heathCheck, logQuery} from "./utils/logging";
 import express, {Application} from 'express'
 import cors from 'cors'
 import {ApolloServer} from "apollo-server-express";
@@ -57,11 +57,15 @@ class App {
                 return {
                     message: error.message
                 }
-            }
+            },
         });
 
-        this.app.use("/graphql", (req, res, next) => logQuery(req,res,next));
-        apolloServer.applyMiddleware({app: this.app, path: '/graphql'})
+        this.app.use("/graphql", (req, res, next) => logQuery(req, res, next));
+        apolloServer.applyMiddleware({
+            app: this.app,
+            path: '/graphql',
+            onHealthCheck: heathCheck
+        })
         this.app.listen(port, () => {
             console.log('Server listening on PORT: ', port)
             console.log('Graphql Endpoint: ', apolloServer.graphqlPath)

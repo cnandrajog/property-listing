@@ -21,3 +21,11 @@ export const logQuery = async (req, res, next) => {
     });
     next();
 }
+
+
+export const heathCheck = async (req) => {
+    // Replace  this conditional with more specific checks!
+    if (!req) {
+        throw ('Application is not running');
+    }
+}
